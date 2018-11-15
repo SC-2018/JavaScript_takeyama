@@ -1,56 +1,96 @@
-var calNum = 0;
-var calType = "";
+var calcNumber = "";
+var calcType = "";
+var previousOpeIsCalc = false;
 
-var init = function () {
-    var buttons = document.getElementsByClassName("num");
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", dispp, false);
+this.addEventListener("load", init, false);
+
+function init() {
+    var numberButtons = document.getElementsByClassName("num");
+    for (let i = 0; i < numberButtons.length; i++) {
+        numberButtons[i].addEventListener("click", dispNumber, false);
     }
 
-    var calcs = document.getElementsByClassName("calc");
-    for (let i = 0; i < calcs.length; i++) {
-        calcs[i].addEventListener("click", calc, false);
+    var calcButtons = document.getElementsByClassName("calc");
+    for (let i = 0; i < calcButtons.length; i++) {
+        calcButtons[i].addEventListener("click", calculate, false);
     }
-
-    document.getElementById("clear").addEventListener("click", clear, false);
-
+    document.getElementById("sign").addEventListener("click", dispSign, false);
+    document.getElementById("deleteOneNum").addEventListener("click", deleteOneNumber, false);
+    document.getElementById("clear").addEventListener("click", clearNumberDisp, false);
 }
 
-var dispp = function (ev) {
-    let hyouji = document.getElementById("hyouji");
-    if (calType) {
-        hyouji.value = "";
+function dispNumber(ev) {
+    let numberDispArea = document.getElementById("numberDispArea");
+    if (previousOpeIsCalc) {
+        previousOpeIsCalc = false;
+        numberDispArea.value = "";
     }
-    if (hyouji.value == "0") {
-        hyouji.value = ev.target.value;
+    if (numberDispArea.value == "0" && ev.target.value != ".") {
+        numberDispArea.value = ev.target.value;
     } else {
-        hyouji.value = hyouji.value + ev.target.value;
+        numberDispArea.value = numberDispArea.value + ev.target.value;
     }
 }
 
-var calc = function (ev) {
-    let dispNum = document.getElementById("hyouji");
-
-    switch (calType) {
+function calculate(ev) {
+    let numberDispArea = document.getElementById("numberDispArea");
+    switch (calcType) {
         case "-":
-            calNum = Number(calNum) - Number(dispNum.value);
-            dispNum.value = calNum;
+            calcNumber = Number(calcNumber) - Number(numberDispArea.value);
+            numberDispArea.value = calcNumber;
             break;
         case "+":
-            calNum = Number(calNum) + Number(dispNum.value);
-            dispNum.value = calNum;
+            calcNumber = Number(calcNumber) + Number(numberDispArea.value);
+            numberDispArea.value = calcNumber;
+            break;
+        case "÷":
+            calcNumber = Number(calcNumber) / Number(numberDispArea.value);
+            numberDispArea.value = calcNumber;
+            break;
+        case "×":
+            calcNumber = Number(calcNumber) * Number(numberDispArea.value);
+            numberDispArea.value = calcNumber;
             break;
         case "=":
         case "":
-            calNum = dispNum.value;
+            calcNumber = numberDispArea.value;
             break;
     }
-    calType = ev.target.value;
+    previousOpeIsCalc = true;
+    calcType = ev.target.value;
 }
 
-var clear = function () {
-    document.getElementById("hyouji").value = 0;
-    calNum = 0;
+function clearNumberDisp() {
+    document.getElementById("numberDispArea").value = "";
+    calcNumber = "";
 }
 
-this.addEventListener("load", init, false);
+function deleteOneNumber() {
+    let numberDispArea = document.getElementById("numberDispArea");
+    let arrayDispNumber = numberDispArea.value.split("");
+    if (arrayDispNumber.length > 1) {
+        arrayDispNumber.pop();
+        if (arrayDispNumber.join("") == "-" || arrayDispNumber.join("") == "+") {
+            numberDispArea.value = ""
+        } else {
+            numberDispArea.value = arrayDispNumber.join("");
+        }
+    } else {
+        numberDispArea.value = ""
+    }
+}
+
+function dispSign() {
+    let numberDispArea = document.getElementById("numberDispArea");
+    if (numberDispArea.value != "") {
+        let arrayDispNumber = numberDispArea.value.split("");
+        if (arrayDispNumber[0] == "-") {
+            arrayDispNumber[0] = "+";
+        } else if (arrayDispNumber[0] == "+") {
+            arrayDispNumber[0] = "-";
+        } else {
+            arrayDispNumber.unshift("-")
+        }
+        numberDispArea.value = arrayDispNumber.join("");
+    }
+}

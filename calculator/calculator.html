@@ -9,11 +9,17 @@
 <body>
     <script type="text/javascript" src="calculator.js"></script>
     <form id="form">
-        <div class="cal">
+        <div id="calculator">
             <div>
-                <input id="hyouji" type="text" value="">
+                <input id="numberDispArea" type="text" value="">
             </div>
             <div>
+                <div>
+                    <input type='button' value="➡" id="deleteOneNum" />
+                    <input type="button" value="±" id="sign" />
+                    <input type="button" value="÷" class="calc" />
+                    <input type="button" value="×" class="calc" />
+                </div>
                 <div>
                     <input type='button' value="7" class="num" />
                     <input type="button" value="8" class="num" />
@@ -24,19 +30,19 @@
                     <input type="button" value="4" class="num" />
                     <input type="button" value="5" class="num" />
                     <input type="button" value="6" class="num" />
-                    <input type="button" value="-" class="calc"/>
+                    <input type="button" value="-" class="calc" />
                 </div>
                 <div>
                     <input type="button" value="1" class="num" />
                     <input type="button" value="2" class="num" />
                     <input type="button" value="3" class="num" />
-                    <input type="button" value="AC" id="clear"/>
+                    <input type="button" value="AC" id="clear" />
                 </div>
                 <div>
                     <input type="button" value="0" class="num" />
                     <input type="button" value="00" class="num" />
                     <input type="button" value="." class="num" />
-                    <input type="button" value="=" class="calc"/>
+                    <input type="button" value="=" class="calc" />
                 </div>
             </div>
     </form>
