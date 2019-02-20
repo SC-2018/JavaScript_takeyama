@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "version": "0.0.1",
+    "name": "MyChromeExtensionTest",
+    "description": "Chrome拡張機能を作ってみよう",
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "Chrom拡張テスト"
+    },
+    "options_page": "options.html",
+    "icons": {
+        "128": "icon.png"
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "permissions": [
+        "tabs",
+        "background",
+        "contextMenus"
+    ]
+}
