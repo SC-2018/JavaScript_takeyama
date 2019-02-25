@@ -1,6 +1,6 @@
 let frm_cnt = 0;
 let url_list = [];
-let notIds = [];
+let emptyListIds = [];
 const deleteButton = `<button class="delete_row" type="button"> 削除 </button>`;
 
 $(function () {
@@ -19,8 +19,8 @@ $(function () {
 
     $("#save").click(function () {
         if (checkInput()) {
-            if (notIds.length > 0) {
-                notIds.reverse().forEach(function (value) {
+            if (emptyListIds.length > 0) {
+                emptyListIds.reverse().forEach(function (value) {
                     $('#list > li').eq(value).remove();
                 });
             }
@@ -40,6 +40,7 @@ $(function () {
 });
 
 function init() {
+    //localStorageにURLが保存されている場合は、入力欄にURLが入力されている状態で表示する。
     if (localStorage["url_list"]) {
         let localStrageUrlList = JSON.parse(localStorage["url_list"]);
         localStrageUrlList.forEach(function (url) {
@@ -65,6 +66,7 @@ function addRow(url) {
 
 function addDeleteRowButton() {
     let len_list = $('#list > li').length;
+    //一度全ての削除ボタンを削除し、その後入力欄の数だけ削除ボタンを追加
     $('#list> li > button').remove();
     for (i = 0; i < len_list; i += 1) {
         $('#list > li').eq(i).append(deleteButton);
@@ -75,7 +77,7 @@ function addDeleteRowButton() {
 function clickDeleteRowButtonListener() {
     $(".delete_row").click(function (ev) {
         let idx = $(ev.target).parent().index();
-        $('#list > li').eq(idx).remove();
+        $('li').eq(idx).remove();
 
         let len_list = $('#list > li').length;
         frm_cnt = len_list;
@@ -84,6 +86,7 @@ function clickDeleteRowButtonListener() {
             $('.delete_row').toggle();
         }
 
+        //行を削除後、リストのindex番号をふり直す
         for (let i = 0; i < len_list; i += 1) {
             $('#list > li').eq(i)
                 .attr("id", "bar_" + i)
@@ -93,19 +96,18 @@ function clickDeleteRowButtonListener() {
 }
 
 function checkInput() {
-    let isOk = true;
     for (var i = 0; i < $('#list > li').length; i++) {
         if ($("#page_url_" + i).val() != "") {
             url_list.push({ url: $("#page_url_" + i).val() });
         } else {
-            notIds.push(i);
+            emptyListIds.push(i);
         }
     }
     if (url_list.length == 0) {
         alert("入力されていません。");
-        isOk = false;
+        return false;
     }
-    return isOk;
+    return true;
 }
 
 function openCompleteDlg() {
