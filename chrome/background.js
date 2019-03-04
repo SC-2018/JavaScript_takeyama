@@ -1,5 +1,5 @@
 chrome.browserAction.onClicked.addListener(function () {
-    let localStrageUrlList = JSON.parse(localStorage["url_list"]);
+    let localStrageUrlList = JSON.parse(localStorage["urlList"]);
     localStrageUrlList.forEach(function (url) {
         chrome.tabs.create({ "url": url["url"] }, tab => { });
     })

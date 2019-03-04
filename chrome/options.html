@@ -5,27 +5,25 @@
     <script src="jquery-3.3.1.min.js"></script>
     <script src="options.js"></script>
     <link href="options.css" rel="stylesheet" type="text/css">
+    <title>ブックマークっぽい拡張機能</title>
 </head>
 
 <body>
     <center>
         <h1>ブックマーク機能っぽいやつ</h1>
-        <div>
-            <div class="input_erea">
-                <button id="add_row" type="button"> 追加 </button>
-                <nobr>※最大５つまで登録できます。</nobr>
-            </div>
-            <ol id="list">
-                <li>
-                    <input type="text" id="page_url_0" value="">
-                </li>
-            </ol>
-            <div class="input_erea">
-                <input id="save" type="button" value="保存">
-                <input id="clear" type="button" value="クリア">
-            </div>
+        <div class="input_area">
+            <button type="button" id="add_url_list_row"> 追加 </button>
+            <nobr>※最大５つまで登録できます。</nobr>
         </div>
-
+        <ol>
+            <li>
+                <input type="text" value="">
+            </li>
+        </ol>
+        <div class="save_area">
+            <input type="button" id="save" value="保存">
+            <input type="button" id="clear" value="クリア">
+        </div>
     </center>
 </body>
 
